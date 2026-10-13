@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অভিভাবকের সম্মতিপত্র</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 12mm 15mm;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Noto Sans Bengali', Arial, sans-serif;
+            background-color: #525659;
+            margin: 0;
+            padding: 20px;
+            color: #000;
+        }
+        .action-bar {
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+            text-align: right;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: #fff;
+            margin: 0 auto;
+            padding: 20mm 20mm;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        /* Top Header Grid: Title and Photo aligned properly */
+        .header-section {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            min-height: 160px;
+        }
+        .header-spacer {
+            width: 125px;
+        }
+        .title-container {
+            flex: 1;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .title-container h2 {
+            font-size: 26px;
+            font-weight: 700;
+            display: inline-block;
+            border-bottom: 2px solid #000;
+            padding-bottom: 3px;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* Photo Area */
+        .photo-box {
+            width: 125px;
+            height: 155px;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            overflow: hidden;
+            background: #fafafa;
+            flex-shrink: 0;
+        }
+        .photo-box span {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .file-hidden {
+            display: none;
+        }
+
+        /* Paragraph with inline inputs */
+        .para-text {
+            font-size: 16px;
+            line-height: 2.3;
+            text-align: justify;
+            clear: both;
+        }
+        .inline-input {
+            border: none;
+            border-bottom: 1.5px dotted #000;
+            outline: none;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            background: transparent;
+            padding: 0 4px;
+            vertical-align: baseline;
+        }
+        .inline-input:focus {
+            border-bottom: 1.5px solid #007bff;
+            background-color: #f0f7ff;
+        }
+
+        /* Guardian Section */
+        .guardian-container {
+            margin-top: 35px;
+            margin-left: 36%;
+            font-size: 16px;
+            line-height: 2.2;
+        }
+        .guardian-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .guardian-row label {
+            white-space: nowrap;
+        }
+        .sig-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sig-canvas-box {
+            display: inline-block;
+            border-bottom: 1.5px dotted #000;
+            position: relative;
+        }
+        canvas#sig-canvas {
+            border: 1px dashed #bbb;
+            background: #fff;
+            vertical-align: middle;
+            touch-action: none;
+            cursor: crosshair;
+        }
+        .clear-sig-btn {
+            font-size: 12px;
+            color: #d9534f;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-left: 5px;
+        }
+
+        /* Info Section */
+        .info-title {
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .info-table tr {
+            height: 38px;
+        }
+        .col-sl {
+            width: 32px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .col-title {
+            width: 180px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .col-sep {
+            width: 25px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .col-field {
+            width: auto;
+        }
+        .table-input {
+            width: 100%;
+            border: none;
+            border-bottom: 1.2px solid #555;
+            outline: none;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            font-size: 16px;
+            padding: 2px 4px;
+            background: transparent;
+        }
+        .table-input:focus {
+            border-bottom: 1.5px solid #007bff;
+            background-color: #f0f7ff;
+        }
+
+        /* Print Settings */
+        @media print {
+            body {
+                background: transparent;
+                padding: 0;
+            }
+            .action-bar, .clear-sig-btn {
+                display: none !important;
+            }
+            .page {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                width: 100%;
+                min-height: auto;
+            }
+            canvas#sig-canvas {
+                border: none !important;
+            }
+            .inline-input, .table-input {
+                border-bottom: 1px solid #333 !important;
+                background: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="action-bar">
+    <button class="btn" onclick="window.print()">📥 PDF হিসেবে সেভ বা প্রিন্ট করুন</button>
+</div>
+
+<div class="page">
+    <!-- Header Section with separate columns to prevent overlap -->
+    <div class="header-section">
+        <div class="header-spacer"></div>
+        <div class="title-container">
+            <h2>অভিভাবকের সম্মতিপত্র</h2>
+        </div>
+        <!-- Chobi box -->
+        <div class="photo-box" onclick="document.getElementById('photo-upload').click();" title="ছবি দিতে ক্লিক করুন">
+            <span id="photo-placeholder">ছাত্রের এক<br>কপি ছবি</span>
+            <img id="photo-preview" alt="Student Photo">
+        </div>
+        <input type="file" id="photo-upload" class="file-hidden" accept="image/*" onchange="previewPhoto(event)">
+    </div>
+
+    <!-- Mulo biboroni -->
+    <div class="para-text">
+        আমি <input type="text" class="inline-input" style="width: 380px;"> ঘোষণা করছি যে, আমার ছেলে/মেয়ে 
+        <input type="text" class="inline-input" style="width: 320px;"> পরিসংখ্যান ডিসিপ্লিনের 
+        <input type="text" class="inline-input" style="width: 120px; text-align: center;"> বর্ষ, 
+        <input type="text" class="inline-input" style="width: 200px; text-align: center;"> টার্মের নিয়মিত ছাত্র/ছাত্রী। সে পরিসংখ্যান ডিসিপ্লিনের সংশ্লিষ্ট কোর্সের অংশ হিসাবে সেশনাল ট্যুর/শিক্ষা সফরে গেলে আমার কোন আপত্তি থাকবেনা এবং উক্ত শিক্ষা সফরে কোন অনাকাঙ্ক্ষিত ঘটনা/দুর্ঘটনার শিকার হলে সেই ক্ষেত্রে বিশ্ববিদ্যালয় কর্তৃপক্ষ দায়ী থাকবে না।
+    </div>
+
+    <!-- Obhibhaboker shakkhor o tottho -->
+    <div class="guardian-container">
+        <div class="guardian-row">
+            <label>অভিভাবকের নাম :</label>
+            <input type="text" class="inline-input" style="flex: 1; margin-left: 6px;">
+        </div>
+        
+        <div class="guardian-row">
+            <label>স্বাক্ষর :</label>
+            <div class="sig-container" style="margin-left: 6px;">
+                <div class="sig-canvas-box">
+                    <canvas id="sig-canvas" width="220" height="42"></canvas>
+                </div>
+                <span class="clear-sig-btn" onclick="clearCanvas()">মুছুন</span>
+            </div>
+        </div>
+
+        <div class="guardian-row">
+            <label>টেলিফোন/ মোবাইল নং (অভিভাবকের) :</label>
+            <input type="text" class="inline-input" style="flex: 1; margin-left: 6px;">
+        </div>
+    </div>
+
+    <!-- Chatro/chatrider bektigoto tothaboli -->
+    <div class="info-title">**ছাত্র/ছাত্রীদের ব্যক্তিগত তথ্যাবলী :**</div>
+    <table class="info-table">
+        <tr>
+            <td class="col-sl">১।</td>
+            <td class="col-title">ছাত্র/ছাত্রীর নাম</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td class="col-sl">২।</td>
+            <td class="col-title">রোল নং</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td class="col-sl">৩।</td>
+            <td class="col-title">ফোন/মোবাইল নং</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td class="col-sl">৪।</td>
+            <td class="col-title">রক্তের গ্রুপ</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td class="col-sl">৫।</td>
+            <td class="col-title">এলার্জি আছে/নাই</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td class="col-sl">৬।</td>
+            <td class="col-title">এলার্জির ধরন</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td class="col-sl">৭।</td>
+            <td class="col-title">বর্তমান ঠিকানা</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td class="col-sl">৮।</td>
+            <td class="col-title">স্থায়ী ঠিকানা</td>
+            <td class="col-sep">:</td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="col-field"><input type="text" class="table-input"></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    function previewPhoto(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = document.getElementById('photo-preview');
+                img.src = evt.target.result;
+                img.style.display = 'block';
+                document.getElementById('photo-placeholder').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    const canvas = document.getElementById('sig-canvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+            x: clientX - rect.left,
+            y: clientY - rect.top
+        };
+    }
+
+    function startDraw(e) {
+        isDrawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        e.preventDefault();
+    }
+
+    function draw(e) {
+        if (!isDrawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        e.preventDefault();
+    }
+
+    function stopDraw() {
+        isDrawing = false;
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDraw);
+
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDraw);
+
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+</script>
+</body>
+</html>
